@@ -171,8 +171,55 @@ button:focus-visible,
 }
 .nav-cta:hover { border-color: var(--accent); background: var(--accent-wash); }
 
+.lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.lang-toggle:hover { border-color: var(--accent); background: var(--accent-wash); }
+
+.lang-opt { color: var(--text-mute); transition: color 0.25s var(--ease); }
+.lang-opt.is-active { color: var(--accent); }
+.lang-sep { color: var(--text-mute); opacity: 0.5; }
+
 .nav-toggle,
 .nav-burger { display: none; }
+
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    padding: 3px;
+}
+
+.lang-opt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-mute);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 100px;
+    transition: color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.lang-opt:hover { color: var(--text-dim); }
+.lang-opt.is-active {
+    color: #0a0a0a;
+    background: var(--accent);
+}
 
 /* ==========================================================================
    Hero
@@ -210,8 +257,8 @@ button:focus-visible,
     color: var(--text-mute);
     z-index: 2;
 }
-.hero-frame-label--left { left: var(--gutter); }
-.hero-frame-label--right { right: var(--gutter); }
+.hero-frame-label--left { inset-inline-start: var(--gutter); }
+.hero-frame-label--right { inset-inline-end: var(--gutter); }
 
 .hero-inner {
     max-width: 760px;
@@ -364,11 +411,11 @@ button:focus-visible,
     font-size: 12px;
     color: var(--text-mute);
 }
-.service-tags li { padding-left: 16px; position: relative; }
+.service-tags li { padding-inline-start: 16px; position: relative; }
 .service-tags li::before {
     content: "";
     position: absolute;
-    left: 0; top: 7px;
+    inset-inline-start: 0; top: 7px;
     width: 6px; height: 1px;
     background: var(--accent);
 }
@@ -470,7 +517,7 @@ button:focus-visible,
 .timeline-step::before {
     content: "";
     position: absolute;
-    top: 3px; left: 0;
+    top: 3px; inset-inline-start: 0;
     width: 9px; height: 9px;
     border-radius: 50%;
     background: var(--accent);
@@ -593,11 +640,11 @@ button:focus-visible,
 
     .main-nav {
         position: fixed;
-        top: 0; right: 0;
+        top: 0; inset-inline-end: 0;
         height: 100vh;
         width: min(78vw, 320px);
         background: var(--bg-alt);
-        border-left: 1px solid var(--line);
+        border-inline-start: 1px solid var(--line);
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
@@ -605,6 +652,10 @@ button:focus-visible,
         padding: 40px var(--gutter);
         transform: translateX(100%);
         transition: transform 0.4s var(--ease);
+    }
+
+    html[dir="rtl"] .main-nav {
+        transform: translateX(-100%);
     }
 
     .nav-toggle:checked ~ .main-nav {
@@ -626,4 +677,39 @@ button:focus-visible,
     .frame-grid { grid-template-columns: 1fr; }
     .hero-actions { flex-direction: column; width: 100%; }
     .hero-actions .btn { width: 100%; }
+}
+
+/* ==========================================================================
+   Persian (RTL) — Vazirmatn replaces the Latin type pairing; letter-spacing
+   and italics are dropped since they break Perso-Arabic letterforms. Brand
+   marks, timecodes, and the wordmark stay Latin/mono by design.
+   ========================================================================== */
+
+html[lang="fa"] body {
+    font-family: "Vazirmatn", var(--sans);
+}
+
+html[lang="fa"] .hero-title,
+html[lang="fa"] .section-title,
+html[lang="fa"] .contact-title,
+html[lang="fa"] .service-card h3,
+html[lang="fa"] .timeline-step h3 {
+    font-family: "Vazirmatn", var(--sans);
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+html[lang="fa"] .hero-title em {
+    font-style: normal;
+    color: var(--accent-soft);
+}
+
+html[lang="fa"] .eyebrow,
+html[lang="fa"] .service-tags,
+html[lang="fa"] .lang-opt {
+    letter-spacing: 0;
+}
+
+html[lang="fa"] .eyebrow {
+    font-family: "Vazirmatn", var(--sans);
 }
