@@ -160,24 +160,28 @@
 
             <div class="frame-grid">
                 <div class="frame frame--estate">
+                    <img class="frame-img" src="images/estate.jpg" alt="Real estate media project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f1">REAL ESTATE</span>
                         <span class="frame-time">00:00:14:22</span>
                     </div>
                 </div>
                 <div class="frame frame--fashion">
+                    <img class="frame-img" src="images/fashion.jpg" alt="Fashion and commercial media project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f2">FASHION</span>
                         <span class="frame-time">00:00:08:11</span>
                     </div>
                 </div>
                 <div class="frame frame--aerial">
+                    <img class="frame-img" src="images/aerial.jpg" alt="Aerial drone media project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f3">AERIAL</span>
                         <span class="frame-time">00:00:21:05</span>
                     </div>
                 </div>
                 <div class="frame frame--web">
+                    <img class="frame-img" src="images/web.jpg" alt="Digital infrastructure project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f4">DIGITAL</span>
                         <span class="frame-time">00:00:03:19</span>
@@ -343,5 +347,78 @@
                 services: {
                     eyebrow: "خدمات ما",
                     title: "سه لنز. یک استودیو.",
-                    s1: { title: "رسانه‌ی املاک", desc: "فیلم‌های سینمایی املاک، تصویربرداری هوایی با پهپاد، و تورهای مجازی ۳۶۰ درجه که آگهی‌ها را به هنر تبدیل می‌کند که مردم دوست دارند دوباره ببینند.", tag1: "تیزر سینمایی", tag2: "هوایی / پهپاد", tag3: "تور مجازی ۳۶۰ درجه" },
-                    s2: { title: "تبلیغاتی و فشن", desc: "عکاسی و فیلم‌برداری آماده‌ی کمپین برای برندهایی که باید دقیقاً
+                    s1: { title: "رسانه‌ی املاک", desc: "فیلم‌های سینمایی املاک، تصویربرداری هوایی با پهپاد، و تورهای مجازی ۳۶۰ درجه که آگهی‌ها را به مقصدهایی تبدیل می‌کند که مردم دوست دارند دوباره ببینند.", tag1: "تیزر سینمایی", tag2: "هوایی / پهپاد", tag3: "تور مجازی ۳۶۰ درجه" },
+                    s2: { title: "تبلیغاتی و فشن", desc: "عکاسی و فیلم‌برداری آماده‌ی کمپین برای برندهایی که باید دقیقاً به همان خوبی که عملکردشان هست دیده شوند — در استودیو یا در لوکیشن.", tag1: "فیلم برند", tag2: "ادیتوریال فشن", tag3: "محتوای محصول" },
+                    s3: { title: "زیرساخت دیجیتال", desc: "وب‌سایت‌های اختصاصی، مهندسی‌شده برای میزبانی هر چیزی که تولید می‌کنیم — سریع، مینیمال و ساخته‌شده برای تبدیل بازدیدکننده به مشتری.", tag1: "طراحی وب اختصاصی", tag2: "توسعه", tag3: "حضور دیجیتال" }
+                },
+                work: {
+                    eyebrow: "فریم‌های منتخب",
+                    title: "استودیویی بر پایه‌ی سه لنز،<br>در حرکت.",
+                    f1: "املاک", f2: "فشن", f3: "هوایی", f4: "دیجیتال"
+                },
+                process: {
+                    eyebrow: "استودیو",
+                    title: "یک پروژه چطور در مادکسون پیش می‌رود.",
+                    p1: { title: "بریف", desc: "پیش از برداشتن دوربین، کسب‌وکار، ملک یا برند شما را می‌شناسیم." },
+                    p2: { title: "تصویربرداری", desc: "در لوکیشن یا استودیو — پوشش زمینی، هوایی و ۳۶۰ درجه در یک نشست." },
+                    p3: { title: "تدوین", desc: "تدوین و رنگ‌آمیزی‌شده برای همان جایی که واقعاً دیده خواهد شد." },
+                    p4: { title: "انتشار", desc: "تحویل به پلتفرم‌های شما — یا قرار گرفتن روی سایتی که برایش ساخته‌ایم." }
+                },
+                contact: {
+                    eyebrow: "بسازیم",
+                    title: "بگویید<br>چه می‌سازید.",
+                    sub: "هر پروژه با یک گفت‌وگوی پنج‌دقیقه‌ای شروع می‌شود، نه یک پروپوزال سنگین."
+                },
+                footer: { contact: "تماس", meta: "© ۲۰۲۶ مادکسون — توسعه بصری کسب‌وکار" }
+            }
+        };
+
+        function getNested(obj, path) {
+            return path.split('.').reduce((o, k) => (o ? o[k] : undefined), obj);
+        }
+
+        function applyLanguage(lang) {
+            const dict = translations[lang] || translations.en;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const val = getNested(dict, el.getAttribute('data-i18n'));
+                if (val !== undefined) el.textContent = val;
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const val = getNested(dict, el.getAttribute('data-i18n-html'));
+                if (val !== undefined) el.innerHTML = val;
+            });
+
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+            document.querySelectorAll('.lang-opt').forEach(opt => {
+                opt.classList.toggle('is-active', opt.getAttribute('data-lang') === lang);
+            });
+
+            try { localStorage.setItem('madaxone-lang', lang); } catch (e) {}
+        }
+
+        function getInitialLanguage() {
+            try {
+                const saved = localStorage.getItem('madaxone-lang');
+                if (saved === 'en' || saved === 'es' || saved === 'fa') return saved;
+            } catch (e) {}
+            const nav = (navigator.language || '').toLowerCase();
+            if (nav.startsWith('es')) return 'es';
+            if (nav.startsWith('fa')) return 'fa';
+            return 'en';
+        }
+
+        let currentLang = getInitialLanguage();
+        applyLanguage(currentLang);
+
+        document.querySelectorAll('.lang-opt').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = btn.getAttribute('data-lang');
+                applyLanguage(currentLang);
+            });
+        });
+    </script>
+</body>
+</html>
