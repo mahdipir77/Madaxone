@@ -236,7 +236,7 @@ button:focus-visible,
     background:
         linear-gradient(180deg, rgba(9,9,11,0.35), rgba(9,9,11,0.78) 55%, rgba(9,9,11,0.94)),
         radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,39,0.08), transparent 60%),
-        url("images/hero.jpg") center/cover no-repeat,
+        url("hero.jpg") center/cover no-repeat,
         var(--bg);
 }
 
