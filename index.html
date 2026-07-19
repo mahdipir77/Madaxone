@@ -89,7 +89,7 @@
             </div>
 
             <div class="hero-timecode" aria-hidden="true">
-                <span>00:00:00:00</span>
+                <span id="rec-timecode">00:00:00:00</span>
                 <span class="rec-dot"></span>
                 <span>REC</span>
             </div>
@@ -160,28 +160,28 @@
 
             <div class="frame-grid">
                 <div class="frame frame--estate">
-                    <img class="frame-img" src="estate.jpg" alt="Real estate media project">
+                    <img class="frame-img" src="estate.JPG" alt="Real estate media project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f1">REAL ESTATE</span>
                         <span class="frame-time">00:00:14:22</span>
                     </div>
                 </div>
                 <div class="frame frame--fashion">
-                    <img class="frame-img" src="fashion.jpg" alt="Fashion and commercial media project">
+                    <img class="frame-img" src="fashion.JPG" alt="Fashion and commercial media project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f2">FASHION</span>
                         <span class="frame-time">00:00:08:11</span>
                     </div>
                 </div>
                 <div class="frame frame--aerial">
-                    <img class="frame-img" src="aerial.jpg" alt="Aerial drone media project">
+                    <img class="frame-img" src="aerial.JPG" alt="Aerial drone media project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f3">AERIAL</span>
                         <span class="frame-time">00:00:21:05</span>
                     </div>
                 </div>
                 <div class="frame frame--web">
-                    <img class="frame-img" src="web.jpg" alt="Digital infrastructure project">
+                    <img class="frame-img" src="web.JPG" alt="Digital infrastructure project">
                     <div class="frame-inner">
                         <span class="frame-tag" data-i18n="work.f4">DIGITAL</span>
                         <span class="frame-time">00:00:03:19</span>
@@ -260,6 +260,24 @@
                 document.getElementById('nav-toggle').checked = false;
             });
         });
+
+        // ============ Live REC timecode ============
+        const timecodeEl = document.getElementById('rec-timecode');
+        if (timecodeEl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const FPS = 24;
+            const startTime = performance.now();
+            const pad = (n) => String(n).padStart(2, '0');
+            setInterval(() => {
+                const totalFrames = Math.floor((performance.now() - startTime) / 1000 * FPS);
+                const frames = totalFrames % FPS;
+                const totalSeconds = Math.floor(totalFrames / FPS);
+                const seconds = totalSeconds % 60;
+                const totalMinutes = Math.floor(totalSeconds / 60);
+                const minutes = totalMinutes % 60;
+                const hours = Math.floor(totalMinutes / 60);
+                timecodeEl.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}:${pad(frames)}`;
+            }, 1000 / FPS);
+        }
 
         // ============ i18n ============
         const translations = {
@@ -347,7 +365,7 @@
                 services: {
                     eyebrow: "خدمات ما",
                     title: "سه لنز. یک استودیو.",
-                    s1: { title: "رسانه‌ی املاک", desc: "فیلم‌های سینمایی املاک، تصویربرداری هوایی با پهپاد، و تورهای مجازی ۳۶۰ درجه که آگهی‌ها را به هنرهایی تبدیل می‌کند که مردم دوست دارند دوباره ببینند.", tag1: "تیزر سینمایی", tag2: "هوایی / پهپاد", tag3: "تور مجازی ۳۶۰ درجه" },
+                    s1: { title: "رسانه‌ی املاک", desc: "فیلم‌های سینمایی املاک، تصویربرداری هوایی با پهپاد، و تورهای مجازی ۳۶۰ درجه که آگهی‌ها را به مقصدهایی تبدیل می‌کند که مردم دوست دارند دوباره ببینند.", tag1: "تیزر سینمایی", tag2: "هوایی / پهپاد", tag3: "تور مجازی ۳۶۰ درجه" },
                     s2: { title: "تبلیغاتی و فشن", desc: "عکاسی و فیلم‌برداری آماده‌ی کمپین برای برندهایی که باید دقیقاً به همان خوبی که عملکردشان هست دیده شوند — در استودیو یا در لوکیشن.", tag1: "فیلم برند", tag2: "ادیتوریال فشن", tag3: "محتوای محصول" },
                     s3: { title: "زیرساخت دیجیتال", desc: "وب‌سایت‌های اختصاصی، مهندسی‌شده برای میزبانی هر چیزی که تولید می‌کنیم — سریع، مینیمال و ساخته‌شده برای تبدیل بازدیدکننده به مشتری.", tag1: "طراحی وب اختصاصی", tag2: "توسعه", tag3: "حضور دیجیتال" }
                 },
