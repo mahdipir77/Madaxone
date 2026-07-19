@@ -1,715 +1,347 @@
-/* ==========================================================================
-   MADAXONE — Design Tokens
-   Palette:  near-black graphite ground, brass/gold accent (film & lens
-   world, not the generic terracotta/acid-green defaults), warm off-white
-   text. Type: Fraunces (display serif, editorial/fashion register) +
-   Inter (body) + IBM Plex Mono (timecodes / structural labels).
-   Signature: film timecode system (HH:MM:SS:FF) used as the structural
-   numbering device throughout, plus letterbox bars on the hero —
-   both drawn directly from the agency's own medium (video production).
-   ========================================================================== */
-
-:root {
-    --bg: #09090b;
-    --bg-alt: #0e0e11;
-    --surface: #131316;
-    --surface-2: #17171b;
-    --line: rgba(242, 240, 235, 0.09);
-    --line-strong: rgba(242, 240, 235, 0.16);
-
-    --text: #f2f0eb;
-    --text-dim: #a8a49c;
-    --text-mute: #6b6660;
-
-    --accent: #c9a227;
-    --accent-soft: #e0c05f;
-    --accent-wash: rgba(201, 162, 39, 0.12);
-    --accent-wash-strong: rgba(201, 162, 39, 0.22);
-
-    --serif: "Fraunces", Georgia, serif;
-    --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, monospace;
-
-    --container: 1180px;
-    --gutter: clamp(20px, 5vw, 64px);
-
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ==========================================================================
-   Reset
-   ========================================================================== */
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-}
-
-img { max-width: 100%; display: block; }
-a { color: inherit; text-decoration: none; }
-ul, ol { list-style: none; }
-
-a:focus-visible,
-button:focus-visible,
-.btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-/* ==========================================================================
-   Shared type utilities
-   ========================================================================== */
-
-.eyebrow {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 18px;
-}
-
-.section-title {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: clamp(28px, 4vw, 44px);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    max-width: 20ch;
-}
-
-.section-head {
-    max-width: var(--container);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
-    margin-bottom: clamp(40px, 6vw, 72px);
-}
-
-/* Grain overlay — cinematic texture, subtle */
-
-.grain {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* ==========================================================================
-   Header
-   ========================================================================== */
-
-.site-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 22px var(--gutter);
-    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), padding 0.4s var(--ease);
-    border-bottom: 1px solid transparent;
-}
-
-.site-header.is-scrolled {
-    background: rgba(9, 9, 11, 0.82);
-    backdrop-filter: blur(14px);
-    border-bottom-color: var(--line);
-    padding: 14px var(--gutter);
-}
-
-.header-inner {
-    max-width: var(--container);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    font-family: var(--mono);
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.22em;
-}
-
-.main-nav {
-    display: flex;
-    align-items: center;
-    gap: clamp(20px, 3vw, 40px);
-    font-size: 14px;
-    color: var(--text-dim);
-}
-
-.main-nav a { transition: color 0.25s var(--ease); }
-.main-nav a:hover { color: var(--text); }
-
-.nav-cta {
-    color: var(--text) !important;
-    border: 1px solid var(--line-strong);
-    padding: 9px 18px;
-    border-radius: 100px;
-    font-size: 13px;
-    transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
-}
-.nav-cta:hover { border-color: var(--accent); background: var(--accent-wash); }
-
-.lang-toggle {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: 1px solid var(--line-strong);
-    border-radius: 100px;
-    padding: 7px 12px;
-    cursor: pointer;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
-}
-.lang-toggle:hover { border-color: var(--accent); background: var(--accent-wash); }
-
-.lang-opt { color: var(--text-mute); transition: color 0.25s var(--ease); }
-.lang-opt.is-active { color: var(--accent); }
-.lang-sep { color: var(--text-mute); opacity: 0.5; }
-
-.nav-toggle,
-.nav-burger { display: none; }
-
-.lang-switch {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    border: 1px solid var(--line-strong);
-    border-radius: 100px;
-    padding: 3px;
-}
-
-.lang-opt {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--text-mute);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 100px;
-    transition: color 0.25s var(--ease), background 0.25s var(--ease);
-}
-.lang-opt:hover { color: var(--text-dim); }
-.lang-opt.is-active {
-    color: #0a0a0a;
-    background: var(--accent);
-}
-
-/* ==========================================================================
-   Hero
-   ========================================================================== */
-
-.hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--gutter);
-    overflow: hidden;
-    background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,39,0.08), transparent 60%),
-        var(--bg);
-}
-
-.letterbox {
-    position: absolute;
-    left: 0; right: 0;
-    height: clamp(28px, 6vh, 64px);
-    background: var(--bg-alt);
-    z-index: 2;
-}
-.letterbox--top { top: 0; border-bottom: 1px solid var(--line); }
-.letterbox--bottom { bottom: 0; border-top: 1px solid var(--line); }
-
-.hero-frame-label {
-    position: absolute;
-    top: calc(clamp(28px, 6vh, 64px) + 28px);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    color: var(--text-mute);
-    z-index: 2;
-}
-.hero-frame-label--left { inset-inline-start: var(--gutter); }
-.hero-frame-label--right { inset-inline-end: var(--gutter); }
-
-.hero-inner {
-    max-width: 760px;
-    text-align: center;
-    padding-top: clamp(28px, 6vh, 64px);
-    padding-bottom: clamp(28px, 6vh, 64px);
-}
-
-.hero-title {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: clamp(38px, 7vw, 76px);
-    line-height: 1.06;
-    letter-spacing: -0.015em;
-    margin-bottom: 28px;
-}
-.hero-title em {
-    font-style: italic;
-    color: var(--accent-soft);
-}
-
-.hero-sub {
-    font-size: clamp(15px, 1.6vw, 18px);
-    color: var(--text-dim);
-    max-width: 46ch;
-    margin: 0 auto 40px;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.hero-timecode {
-    position: absolute;
-    bottom: calc(clamp(28px, 6vh, 64px) + 28px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--text-mute);
-    z-index: 2;
-}
-
-.rec-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #d9534f;
-    animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.25; }
-}
-
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 30px;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    transition: transform 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-
-.btn--solid {
-    background: var(--accent);
-    color: #0a0a0a;
-}
-.btn--solid:hover {
-    background: var(--accent-soft);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px -8px var(--accent-wash-strong);
-}
-
-.btn--ghost {
-    border: 1px solid var(--line-strong);
-    color: var(--text);
-}
-.btn--ghost:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-}
-
-.btn--lg { padding: 18px 36px; font-size: 15px; }
-
-/* ==========================================================================
-   Services
-   ========================================================================== */
-
-.services { padding: clamp(80px, 12vw, 160px) 0 clamp(40px, 8vw, 100px); }
-
-.services-grid {
-    max-width: var(--container);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-}
-
-.service-card {
-    background: var(--bg);
-    padding: 44px 34px;
-    transition: background 0.35s var(--ease);
-}
-.service-card:hover { background: var(--surface); }
-
-.service-code {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 22px;
-}
-
-.service-card h3 {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: 24px;
-    margin-bottom: 14px;
-    letter-spacing: -0.01em;
-}
-
-.service-card p {
-    color: var(--text-dim);
-    font-size: 14.5px;
-    margin-bottom: 26px;
-}
-
-.service-tags {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-mute);
-}
-.service-tags li { padding-inline-start: 16px; position: relative; }
-.service-tags li::before {
-    content: "";
-    position: absolute;
-    inset-inline-start: 0; top: 7px;
-    width: 6px; height: 1px;
-    background: var(--accent);
-}
-
-/* ==========================================================================
-   Work / Frames
-   ========================================================================== */
-
-.work { padding: clamp(40px, 8vw, 100px) 0; }
-
-.frame-grid {
-    max-width: var(--container);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-}
-
-.frame {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    transition: transform 0.45s var(--ease);
-}
-.frame:hover { transform: translateY(-6px); }
-
-.frame::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 120% 100% at 50% 120%, rgba(0,0,0,0.65), transparent 60%);
-}
-
-.frame--estate  { background: linear-gradient(150deg, #1c1a14, #2c2410 45%, #0c0b08); }
-.frame--fashion { background: linear-gradient(150deg, #17141a, #241a2c 45%, #0a090c); }
-.frame--aerial  { background: linear-gradient(150deg, #10161a, #142530 45%, #06090b); }
-.frame--web     { background: linear-gradient(150deg, #161513, #262019 45%, #0a0908); }
-
-.frame-inner {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 16px;
-}
-
-.frame-tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    color: var(--text);
-    align-self: flex-start;
-    background: rgba(9,9,11,0.55);
-    padding: 5px 9px;
-    border-radius: 4px;
-    backdrop-filter: blur(4px);
-}
-
-.frame-time {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: rgba(242,240,235,0.55);
-    align-self: flex-end;
-}
-
-/* ==========================================================================
-   Process / Timeline
-   ========================================================================== */
-
-.process { padding: clamp(80px, 12vw, 160px) 0; background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-
-.timeline {
-    max-width: var(--container);
-    margin: 0 auto;
-    padding: 0 var(--gutter);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
-    position: relative;
-}
-
-.timeline::before {
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: var(--gutter);
-    right: var(--gutter);
-    height: 1px;
-    background: var(--line-strong);
-}
-
-.timeline-step { position: relative; padding-top: 30px; }
-
-.timeline-step::before {
-    content: "";
-    position: absolute;
-    top: 3px; inset-inline-start: 0;
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px var(--accent-wash);
-}
-
-.timeline-code {
-    display: block;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-mute);
-    letter-spacing: 0.08em;
-    margin-bottom: 14px;
-}
-
-.timeline-step h3 {
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 10px;
-}
-
-.timeline-step p {
-    color: var(--text-dim);
-    font-size: 14px;
-}
-
-/* ==========================================================================
-   Contact / CTA
-   ========================================================================== */
-
-.contact {
-    padding: clamp(90px, 14vw, 180px) var(--gutter);
-    text-align: center;
-    background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(201,162,39,0.1), transparent 65%);
-}
-
-.contact-inner { max-width: 640px; margin: 0 auto; }
-
-.contact-title {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: clamp(32px, 5vw, 56px);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
-}
-
-.contact-sub {
-    color: var(--text-dim);
-    margin-bottom: 36px;
-}
-
-/* ==========================================================================
-   Footer
-   ========================================================================== */
-
-.site-footer {
-    padding: 40px var(--gutter);
-    border-top: 1px solid var(--line);
-}
-
-.footer-inner {
-    max-width: var(--container);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.logo--footer { color: var(--text-mute); }
-
-.footer-nav {
-    display: flex;
-    gap: 24px;
-    font-size: 13px;
-    color: var(--text-dim);
-}
-.footer-nav a:hover { color: var(--text); }
-
-.footer-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--text-mute);
-    width: 100%;
-    text-align: center;
-    order: 3;
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
-    margin-top: 8px;
-}
-
-/* ==========================================================================
-   Responsive
-   ========================================================================== */
-
-@media (max-width: 900px) {
-    .services-grid { grid-template-columns: 1fr; }
-    .frame-grid { grid-template-columns: repeat(2, 1fr); }
-    .timeline { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
-    .timeline::before { display: none; }
-}
-
-@media (max-width: 720px) {
-    .nav-burger {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        z-index: 101;
-    }
-    .nav-burger span {
-        width: 22px; height: 1.5px;
-        background: var(--text);
-        transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
-    }
-
-    .main-nav {
-        position: fixed;
-        top: 0; inset-inline-end: 0;
-        height: 100vh;
-        width: min(78vw, 320px);
-        background: var(--bg-alt);
-        border-inline-start: 1px solid var(--line);
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 28px;
-        padding: 40px var(--gutter);
-        transform: translateX(100%);
-        transition: transform 0.4s var(--ease);
-    }
-
-    html[dir="rtl"] .main-nav {
-        transform: translateX(-100%);
-    }
-
-    .nav-toggle:checked ~ .main-nav {
-        transform: translateX(0);
-    }
-
-    .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
-    .nav-toggle:checked ~ .nav-burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    .hero-frame-label,
-    .hero-timecode { display: none; }
-
-    .frame-grid { grid-template-columns: 1fr 1fr; }
-    .timeline { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-    .frame-grid { grid-template-columns: 1fr; }
-    .hero-actions { flex-direction: column; width: 100%; }
-    .hero-actions .btn { width: 100%; }
-}
-
-/* ==========================================================================
-   Persian (RTL) — Vazirmatn replaces the Latin type pairing; letter-spacing
-   and italics are dropped since they break Perso-Arabic letterforms. Brand
-   marks, timecodes, and the wordmark stay Latin/mono by design.
-   ========================================================================== */
-
-html[lang="fa"] body {
-    font-family: "Vazirmatn", var(--sans);
-}
-
-html[lang="fa"] .hero-title,
-html[lang="fa"] .section-title,
-html[lang="fa"] .contact-title,
-html[lang="fa"] .service-card h3,
-html[lang="fa"] .timeline-step h3 {
-    font-family: "Vazirmatn", var(--sans);
-    font-weight: 700;
-    letter-spacing: 0;
-}
-
-html[lang="fa"] .hero-title em {
-    font-style: normal;
-    color: var(--accent-soft);
-}
-
-html[lang="fa"] .eyebrow,
-html[lang="fa"] .service-tags,
-html[lang="fa"] .lang-opt {
-    letter-spacing: 0;
-}
-
-html[lang="fa"] .eyebrow {
-    font-family: "Vazirmatn", var(--sans);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madaxone | Visual Business Development</title>
+    <meta name="description" content="Madaxone is a visual business development studio — cinematic real estate media, commercial & fashion content, and bespoke web infrastructure for brands that need to be seen.">
+    <link rel="canonical" href="https://madaxone.com/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph / social preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Madaxone">
+    <meta property="og:title" content="Madaxone | Visual Business Development">
+    <meta property="og:description" content="Cinematic real estate media, commercial & fashion content, and bespoke web infrastructure for brands that need to be seen.">
+    <meta property="og:url" content="https://madaxone.com/">
+    <meta property="og:image" content="https://madaxone.com/og-image.jpg">
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Madaxone | Visual Business Development">
+    <meta name="twitter:description" content="Cinematic real estate media, commercial & fashion content, and bespoke web infrastructure for brands that need to be seen.">
+    <meta name="twitter:image" content="https://madaxone.com/og-image.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- grain / texture overlay -->
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="site-header" id="site-header">
+        <div class="header-inner">
+            <a href="#" class="logo">MADAXONE</a>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+            <label for="nav-toggle" class="nav-burger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </label>
+
+            <nav class="main-nav">
+                <a href="#work" data-i18n="nav.work">Work</a>
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#process" data-i18n="nav.studio">Studio</a>
+                <a href="#contact" class="nav-cta" data-i18n="nav.cta">Start a Project</a>
+                <div class="lang-switch" role="group" aria-label="Switch language">
+                    <button type="button" class="lang-opt" data-lang="en">EN</button>
+                    <button type="button" class="lang-opt" data-lang="es">ES</button>
+                    <button type="button" class="lang-opt" data-lang="fa">FA</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ============ HERO ============ -->
+        <section class="hero" id="top">
+            <div class="letterbox letterbox--top" aria-hidden="true"></div>
+            <div class="letterbox letterbox--bottom" aria-hidden="true"></div>
+
+            <div class="hero-frame-label hero-frame-label--left" aria-hidden="true">REEL — 001</div>
+            <div class="hero-frame-label hero-frame-label--right" aria-hidden="true">EST. MADAXONE</div>
+
+            <div class="hero-inner">
+                <p class="eyebrow" data-i18n="hero.eyebrow">Visual Business Development Studio</p>
+                <h1 class="hero-title" data-i18n-html="hero.title">
+                    We shoot the story<br>
+                    your business <em>hasn't</em><br>
+                    told yet.
+                </h1>
+                <p class="hero-sub" data-i18n="hero.sub">
+                    Madaxone builds the visual and digital assets that move real estate,
+                    brands, and businesses forward — from cinematic property films to the
+                    websites built to hold them.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn--solid" data-i18n="hero.cta1">Start a Project</a>
+                    <a href="#work" class="btn btn--ghost" data-i18n="hero.cta2">View the Work</a>
+                </div>
+            </div>
+
+            <div class="hero-timecode" aria-hidden="true">
+                <span>00:00:00:00</span>
+                <span class="rec-dot"></span>
+                <span>REC</span>
+            </div>
+        </section>
+
+        <!-- ============ SERVICES ============ -->
+        <section class="services" id="services">
+            <div class="section-head">
+                <p class="eyebrow" data-i18n="services.eyebrow">What We Do</p>
+                <h2 class="section-title" data-i18n="services.title">Three lenses. One studio.</h2>
+            </div>
+
+            <div class="services-grid">
+
+                <article class="service-card">
+                    <div class="service-code">00:01</div>
+                    <h3 data-i18n="services.s1.title">Real Estate Media</h3>
+                    <p data-i18n="services.s1.desc">
+                        Cinematic property films, aerial drone footage, and 360° virtual
+                        tours that turn listings into destinations people want to walk
+                        through twice.
+                    </p>
+                    <ul class="service-tags">
+                        <li data-i18n="services.s1.tag1">Cinematic Teasers</li>
+                        <li data-i18n="services.s1.tag2">Aerial / Drone</li>
+                        <li data-i18n="services.s1.tag3">360° Virtual Tours</li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-code">00:02</div>
+                    <h3 data-i18n="services.s2.title">Commercial &amp; Fashion</h3>
+                    <p data-i18n="services.s2.desc">
+                        Campaign-ready photography and video for brands that need to
+                        look exactly as good as they perform — in-studio or on
+                        location.
+                    </p>
+                    <ul class="service-tags">
+                        <li data-i18n="services.s2.tag1">Brand Films</li>
+                        <li data-i18n="services.s2.tag2">Fashion Editorial</li>
+                        <li data-i18n="services.s2.tag3">Product Content</li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-code">00:03</div>
+                    <h3 data-i18n="services.s3.title">Digital Infrastructure</h3>
+                    <p data-i18n="services.s3.desc">
+                        Bespoke websites engineered to hold everything we shoot —
+                        fast, minimal, and built to convert visitors into clients.
+                    </p>
+                    <ul class="service-tags">
+                        <li data-i18n="services.s3.tag1">Custom Web Design</li>
+                        <li data-i18n="services.s3.tag2">Development</li>
+                        <li data-i18n="services.s3.tag3">Digital Presence</li>
+                    </ul>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ============ WORK / FRAMES ============ -->
+        <section class="work" id="work">
+            <div class="section-head">
+                <p class="eyebrow" data-i18n="work.eyebrow">Selected Frames</p>
+                <h2 class="section-title" data-i18n-html="work.title">A studio built on three lenses,<br>shown in motion.</h2>
+            </div>
+
+            <div class="frame-grid">
+                <div class="frame frame--estate">
+                    <div class="frame-inner">
+                        <span class="frame-tag" data-i18n="work.f1">REAL ESTATE</span>
+                        <span class="frame-time">00:00:14:22</span>
+                    </div>
+                </div>
+                <div class="frame frame--fashion">
+                    <div class="frame-inner">
+                        <span class="frame-tag" data-i18n="work.f2">FASHION</span>
+                        <span class="frame-time">00:00:08:11</span>
+                    </div>
+                </div>
+                <div class="frame frame--aerial">
+                    <div class="frame-inner">
+                        <span class="frame-tag" data-i18n="work.f3">AERIAL</span>
+                        <span class="frame-time">00:00:21:05</span>
+                    </div>
+                </div>
+                <div class="frame frame--web">
+                    <div class="frame-inner">
+                        <span class="frame-tag" data-i18n="work.f4">DIGITAL</span>
+                        <span class="frame-time">00:00:03:19</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PROCESS ============ -->
+        <section class="process" id="process">
+            <div class="section-head">
+                <p class="eyebrow" data-i18n="process.eyebrow">The Studio</p>
+                <h2 class="section-title" data-i18n="process.title">How a project moves through Madaxone.</h2>
+            </div>
+
+            <ol class="timeline">
+                <li class="timeline-step">
+                    <span class="timeline-code">00:00:00:00</span>
+                    <h3 data-i18n="process.p1.title">Brief</h3>
+                    <p data-i18n="process.p1.desc">We learn the business, the property, or the brand before we ever pick up a camera.</p>
+                </li>
+                <li class="timeline-step">
+                    <span class="timeline-code">00:00:07:12</span>
+                    <h3 data-i18n="process.p2.title">Shoot</h3>
+                    <p data-i18n="process.p2.desc">On location or in studio — ground, air, and 360° coverage captured in a single pass.</p>
+                </li>
+                <li class="timeline-step">
+                    <span class="timeline-code">00:00:15:04</span>
+                    <h3 data-i18n="process.p3.title">Cut</h3>
+                    <p data-i18n="process.p3.desc">Edited and color-graded into a piece built for how it will actually be seen.</p>
+                </li>
+                <li class="timeline-step">
+                    <span class="timeline-code">00:00:22:18</span>
+                    <h3 data-i18n="process.p4.title">Launch</h3>
+                    <p data-i18n="process.p4.desc">Delivered to your platforms — or placed on a site we've built to hold it.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ============ CONTACT / CTA ============ -->
+        <section class="contact" id="contact">
+            <div class="contact-inner">
+                <p class="eyebrow" data-i18n="contact.eyebrow">Let's Build</p>
+                <h2 class="contact-title" data-i18n-html="contact.title">Tell us what<br>you're building.</h2>
+                <p class="contact-sub" data-i18n="contact.sub">Every project starts with a five-minute conversation, not a proposal deck.</p>
+                <a href="mailto:hello@madaxone.com" class="btn btn--solid btn--lg">hello@madaxone.com</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="logo logo--footer">MADAXONE</span>
+            <nav class="footer-nav">
+                <a href="#work" data-i18n="nav.work">Work</a>
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#process" data-i18n="nav.studio">Studio</a>
+                <a href="#contact" data-i18n="footer.contact">Contact</a>
+            </nav>
+            <p class="footer-meta" data-i18n="footer.meta">© 2026 MADAXONE — VISUAL BUSINESS DEVELOPMENT</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header solidifies on scroll
+        const header = document.getElementById('site-header');
+        const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        // Close mobile nav after a link is tapped
+        document.querySelectorAll('.main-nav a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.getElementById('nav-toggle').checked = false;
+            });
+        });
+
+        // ============ i18n ============
+        const translations = {
+            en: {
+                nav: { work: "Work", services: "Services", studio: "Studio", cta: "Start a Project" },
+                hero: {
+                    eyebrow: "Visual Business Development Studio",
+                    title: "We shoot the story<br>your business <em>hasn't</em><br>told yet.",
+                    sub: "Madaxone builds the visual and digital assets that move real estate, brands, and businesses forward — from cinematic property films to the websites built to hold them.",
+                    cta1: "Start a Project",
+                    cta2: "View the Work"
+                },
+                services: {
+                    eyebrow: "What We Do",
+                    title: "Three lenses. One studio.",
+                    s1: { title: "Real Estate Media", desc: "Cinematic property films, aerial drone footage, and 360° virtual tours that turn listings into destinations people want to walk through twice.", tag1: "Cinematic Teasers", tag2: "Aerial / Drone", tag3: "360° Virtual Tours" },
+                    s2: { title: "Commercial &amp; Fashion", desc: "Campaign-ready photography and video for brands that need to look exactly as good as they perform — in-studio or on location.", tag1: "Brand Films", tag2: "Fashion Editorial", tag3: "Product Content" },
+                    s3: { title: "Digital Infrastructure", desc: "Bespoke websites engineered to hold everything we shoot — fast, minimal, and built to convert visitors into clients.", tag1: "Custom Web Design", tag2: "Development", tag3: "Digital Presence" }
+                },
+                work: {
+                    eyebrow: "Selected Frames",
+                    title: "A studio built on three lenses,<br>shown in motion.",
+                    f1: "REAL ESTATE", f2: "FASHION", f3: "AERIAL", f4: "DIGITAL"
+                },
+                process: {
+                    eyebrow: "The Studio",
+                    title: "How a project moves through Madaxone.",
+                    p1: { title: "Brief", desc: "We learn the business, the property, or the brand before we ever pick up a camera." },
+                    p2: { title: "Shoot", desc: "On location or in studio — ground, air, and 360° coverage captured in a single pass." },
+                    p3: { title: "Cut", desc: "Edited and color-graded into a piece built for how it will actually be seen." },
+                    p4: { title: "Launch", desc: "Delivered to your platforms — or placed on a site we've built to hold it." }
+                },
+                contact: {
+                    eyebrow: "Let's Build",
+                    title: "Tell us what<br>you're building.",
+                    sub: "Every project starts with a five-minute conversation, not a proposal deck."
+                },
+                footer: { contact: "Contact", meta: "© 2026 MADAXONE — VISUAL BUSINESS DEVELOPMENT" }
+            },
+            es: {
+                nav: { work: "Trabajo", services: "Servicios", studio: "Estudio", cta: "Iniciar Proyecto" },
+                hero: {
+                    eyebrow: "Estudio de Desarrollo Visual de Negocios",
+                    title: "Filmamos la historia<br>que tu negocio <em>aún no</em><br>ha contado.",
+                    sub: "Madaxone crea los activos visuales y digitales que impulsan bienes raíces, marcas y negocios — desde películas cinematográficas de propiedades hasta los sitios web que las alojan.",
+                    cta1: "Iniciar Proyecto",
+                    cta2: "Ver el Trabajo"
+                },
+                services: {
+                    eyebrow: "Qué Hacemos",
+                    title: "Tres lentes. Un estudio.",
+                    s1: { title: "Medios Inmobiliarios", desc: "Películas cinematográficas de propiedades, tomas aéreas con dron y tours virtuales en 360° que convierten anuncios en destinos que la gente quiere recorrer dos veces.", tag1: "Teasers Cinematográficos", tag2: "Aéreo / Dron", tag3: "Tours Virtuales 360°" },
+                    s2: { title: "Comercial y Moda", desc: "Fotografía y video listos para campaña, para marcas que necesitan verse exactamente tan bien como rinden — en estudio o en locación.", tag1: "Películas de Marca", tag2: "Editorial de Moda", tag3: "Contenido de Producto" },
+                    s3: { title: "Infraestructura Digital", desc: "Sitios web a medida, diseñados para alojar todo lo que filmamos — rápidos, minimalistas y construidos para convertir visitantes en clientes.", tag1: "Diseño Web a Medida", tag2: "Desarrollo", tag3: "Presencia Digital" }
+                },
+                work: {
+                    eyebrow: "Tomas Seleccionadas",
+                    title: "Un estudio construido sobre tres lentes,<br>mostrado en movimiento.",
+                    f1: "INMOBILIARIO", f2: "MODA", f3: "AÉREO", f4: "DIGITAL"
+                },
+                process: {
+                    eyebrow: "El Estudio",
+                    title: "Cómo avanza un proyecto en Madaxone.",
+                    p1: { title: "Briefing", desc: "Conocemos el negocio, la propiedad o la marca antes de tomar la cámara." },
+                    p2: { title: "Rodaje", desc: "En locación o en estudio — cobertura terrestre, aérea y 360° capturada en una sola sesión." },
+                    p3: { title: "Edición", desc: "Editado y con corrección de color para la pieza tal como realmente se verá." },
+                    p4: { title: "Lanzamiento", desc: "Entregado a tus plataformas — o publicado en un sitio que construimos para alojarlo." }
+                },
+                contact: {
+                    eyebrow: "Construyamos",
+                    title: "Cuéntanos qué<br>estás construyendo.",
+                    sub: "Cada proyecto comienza con una conversación de cinco minutos, no con una propuesta comercial."
+                },
+                footer: { contact: "Contacto", meta: "© 2026 MADAXONE — DESARROLLO VISUAL DE NEGOCIOS" }
+            },
+            fa: {
+                nav: { work: "نمونه‌کارها", services: "خدمات", studio: "استودیو", cta: "شروع پروژه" },
+                hero: {
+                    eyebrow: "استودیوی توسعه بصری کسب‌وکار",
+                    title: "داستانی که کسب‌وکار شما<br>هنوز <em>روایت نکرده</em><br>را ثبت می‌کنیم.",
+                    sub: "مادکسون ابزارهای بصری و دیجیتالی می‌سازد که املاک، برندها و کسب‌وکارها را جلو می‌برد — از فیلم‌های سینمایی املاک تا وب‌سایت‌هایی که میزبان آن‌ها هستند.",
+                    cta1: "شروع پروژه",
+                    cta2: "مشاهده نمونه‌کارها"
+                },
+                services: {
+                    eyebrow: "خدمات ما",
+                    title: "سه لنز. یک استودیو.",
+                    s1: { title: "رسانه‌ی املاک", desc: "فیلم‌های سینمایی املاک، تصویربرداری هوایی با پهپاد، و تورهای مجازی ۳۶۰ درجه که آگهی‌ها را به مقصدهایی تبدیل می‌کند که مردم دوست دارند دوباره ببینند.", tag1: "تیزر سینمایی", tag2: "هوایی / پهپاد", tag3: "تور مجازی ۳۶۰ درجه" },
+                    s2: { title: "تبلیغاتی و فشن", desc: "عکاسی و فیلم‌برداری آماده‌ی کمپین برای برندهایی که باید دقیقاً
